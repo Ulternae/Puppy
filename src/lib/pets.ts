@@ -21,7 +21,7 @@ const catalog: readonly Omit<Pet, 'liked'>[] = [
   { id: 'lola', name: 'Lola', description: 'Un abrazo de pelo y alegría', photo: 'lola', rating: 9 },
 ];
 
-export const favoritePetIds: readonly string[] = ['milo', 'luna', 'coco', 'nala', 'toby'];
+export type FavoritePet = Pet & { lastRatedOrder: number };
 export type PetsAction = { type: 'rate'; id: string };
 
 export function initialPets(): Pet[] {
@@ -35,29 +35,34 @@ export function petsReducer(pets: Pet[], action: PetsAction): Pet[] {
     ? { ...pet, liked: !pet.liked, rating: pet.rating + (pet.liked ? -1 : 1) } : pet);
 }
 
-export function favoritePets(pets: readonly Pet[]): Pet[] {
-  return favoritePetIds.flatMap(id => {
-    const pet = pets.find(item => item.id === id);
-    return pet ? [pet] : [];
-  });
+export function favoritePets(pets: readonly FavoritePet[]): FavoritePet[] {
+  return [...pets].filter(pet => pet.liked).sort((a, b) => b.lastRatedOrder - a.lastRatedOrder || a.id.localeCompare(b.id)).slice(0, 5);
 }
 
-export type PetsState = { pets: Pet[]; celebration: { id: number; petId: string } | null; sequence: number };
-export type PetsEvent = PetsAction | { type: 'celebrationFinished'; id: number };
+export type PetsState = { pets: Pet[]; favorites: FavoritePet[]; celebration: { id: number; petId: string } | null; sequence: number };
+export type PetsEvent =
+  | { type: 'hydrate'; favorites: FavoritePet[] }
+  | { type: 'saved'; pet: Pet; favorites: FavoritePet[] }
+  | { type: 'celebrationFinished'; id: number };
 
 export function initialPetsState(): PetsState {
-  return { pets: initialPets(), celebration: null, sequence: 0 };
+  return { pets: initialPets(), favorites: [], celebration: null, sequence: 0 };
 }
 
 export function petsStateReducer(state: PetsState, action: PetsEvent): PetsState {
   if (action.type === 'celebrationFinished') {
     return state.celebration?.id === action.id ? { ...state, celebration: null } : state;
   }
-  const pets = petsReducer(state.pets, action);
-  if (pets === state.pets) return state;
-  if (pets.find(pet => pet.id === action.id)?.liked) {
+  const favorites = favoritePets(action.favorites);
+  const pets = state.pets.map(pet => {
+    const saved = favorites.find(favorite => favorite.id === pet.id);
+    if (saved) return { id: saved.id, name: saved.name, description: saved.description, photo: saved.photo, rating: saved.rating, liked: saved.liked };
+    return action.type === 'saved' && action.pet.id === pet.id ? action.pet : pet;
+  });
+  if (action.type === 'hydrate') return { ...state, pets, favorites, celebration: null };
+  if (action.pet.liked) {
     const sequence = state.sequence + 1;
-    return { pets, sequence, celebration: { id: sequence, petId: action.id } };
+    return { pets, favorites, sequence, celebration: { id: sequence, petId: action.pet.id } };
   }
-  return { ...state, pets, celebration: state.celebration?.petId === action.id ? null : state.celebration };
+  return { ...state, pets, favorites, celebration: state.celebration?.petId === action.pet.id ? null : state.celebration };
 }

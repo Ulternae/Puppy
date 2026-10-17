@@ -46,11 +46,12 @@ npm run start:registration
 - Revisión, confirmación y edición de los datos del contacto.
 - Acceso al contacto confirmado desde el menú Ver contacto.
 - Catálogo de diez mascotas con fotografías, accesible desde la pestaña Mascotas, Conocer mascotas o el menú Explorar mascotas.
-- Un huesito por mascota, con confeti al añadirlo y opción de retirarlo.
-- Cinco favoritos accesibles desde la estrella del catálogo, con sus contadores de huesitos actualizados.
+- Un huesito por mascota, con confeti al guardar el voto y opción de retirarlo.
+- Hasta cinco favoritos accesibles desde la estrella, ordenados por el huesito más reciente y recuperados al volver a abrir la aplicación.
+- Guardado local con SQLite en la tabla `mascota`, incluyendo los datos completos de cada favorito y su contador de huesitos.
 - Menús Contacto y Acerca de, disponibles en las cabeceras de Puppy.
 - Formulario de comentarios que prepara el correo para revisarlo y enviarlo desde el cliente del dispositivo, con opción de copiar el mensaje si no se puede abrir.
 
-Las rutinas, los recordatorios, el contacto y los votos se conservan durante la sesión de la aplicación. Favoritos contiene cinco mascotas fijas: Milo, Luna, Coco, Nala y Toby.
+Los cinco favoritos más recientes y sus votos se conservan entre aperturas de la aplicación. Al añadir una sexta mascota, la más antigua sale de Favoritos. Retirar el huesito elimina esa mascota de la lista. Las rutinas, los recordatorios y el contacto se conservan durante la sesión.
 
 El destinatario de comentarios se puede configurar mediante la variable de entorno `EXPO_PUBLIC_SUPPORT_EMAIL` antes de iniciar Expo.

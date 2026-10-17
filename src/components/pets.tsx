@@ -1,11 +1,12 @@
 import { memo, useState } from 'react';
 import { Image, StyleSheet, View, type ImageSourcePropType } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import { ActivityIndicator, IconButton } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import type { Pet, PetPhoto } from '../lib/pets';
 import { colors } from '../theme';
 import { Action, AppMenu, Copy, Icon } from './ui';
+import { usePets } from '../state/pets-context';
 
 const photos: Record<PetPhoto, ImageSourcePropType> = {
   milo: require('../../assets/pets/milo.jpg'),
@@ -48,18 +49,32 @@ function Rating({ pet }: { pet: Pet }) {
   </View>;
 }
 
-export const PetCard = memo(function PetCard({ pet, onRate }: { pet: Pet; onRate: (id: string) => void }) {
+export const PetCard = memo(function PetCard({ pet, onRate, disabled = false, saving = false }: { pet: Pet; onRate: (id: string) => void; disabled?: boolean; saving?: boolean }) {
   return <View style={styles.card}>
     <PetPhotoView pet={pet} />
     <View style={styles.cardContent}>
       <View style={styles.nameRow}><Copy weight="bold" accessibilityRole="header" style={styles.petName}>{pet.name}</Copy><Rating pet={pet} /></View>
       <Copy style={styles.description}>{pet.description}</Copy>
       <Action icon={pet.liked ? 'check' : 'bone'} secondary={pet.liked}
-        accessibilityLabel={pet.liked ? `Retirar tu huesito de ${pet.name}` : `Darle un huesito a ${pet.name}`}
-        accessibilityState={{ selected: pet.liked }} onPress={() => onRate(pet.id)}>{pet.liked ? 'Retirar huesito' : 'Dale un huesito'}</Action>
+        disabled={disabled} loading={saving}
+        accessibilityLabel={saving ? `Guardando el huesito de ${pet.name}` : pet.liked ? `Retirar tu huesito de ${pet.name}` : `Darle un huesito a ${pet.name}`}
+        accessibilityState={{ selected: pet.liked, disabled, busy: saving }} onPress={() => onRate(pet.id)}>{saving ? 'Guardando…' : pet.liked ? 'Retirar huesito' : 'Dale un huesito'}</Action>
     </View>
   </View>;
 });
+
+export function PetsStorageFeedback() {
+  const { status, saveError, retryLoad, retrySave } = usePets();
+  if (status === 'ready' && !saveError) return null;
+  return <View accessibilityLiveRegion="polite" style={{ gap: 12, padding: 16, borderRadius: 12, backgroundColor: colors.primarySubtle }}>
+    {status === 'loading' ? <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+      <ActivityIndicator size="small" color={colors.primaryDark} /><Copy style={{ flex: 1, fontSize: 14 }}>Cargando tus favoritos…</Copy>
+    </View> : <>
+      <Copy style={{ fontSize: 14 }}>{status === 'error' ? 'No pudimos cargar tus favoritos. Inténtalo de nuevo.' : 'No pudimos guardar el cambio. Tus favoritos siguen como estaban.'}</Copy>
+      <Action secondary icon="refresh" onPress={status === 'error' ? retryLoad : retrySave}>Reintentar</Action>
+    </>}
+  </View>;
+}
 
 export function FavoritePetRow({ pet }: { pet: Pet }) {
   return <View style={styles.favoriteRow}>
@@ -74,7 +89,7 @@ export function PetCatalogHeader({ favorites = false }: { favorites?: boolean })
     <View style={styles.header}>
       <IconButton icon="arrow-left" iconColor={colors.primaryDark} accessibilityLabel={favorites ? 'Volver a mascotas' : 'Volver al inicio'} onPress={() => { if (favorites) router.dismissTo('/mascotas'); else router.navigate('/inicio'); }} />
       {favorites ? <Copy weight="bold" style={styles.headerTitle}>Favoritos</Copy> : <View style={styles.brand}><Icon name="paw-outline" size={25} /><Copy weight="bold" style={styles.headerTitle}>puppy</Copy></View>}
-      {!favorites && <IconButton icon="star-outline" iconColor={colors.primaryDark} accessibilityLabel="Ver cinco mascotas favoritas" onPress={() => router.navigate('/mascotas/favoritos')} />}
+      {!favorites && <IconButton icon="star-outline" iconColor={colors.primaryDark} accessibilityLabel="Ver mascotas favoritas" onPress={() => router.navigate('/mascotas/favoritos')} />}
       <AppMenu />
     </View>
   </SafeAreaView>;

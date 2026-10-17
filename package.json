@@ -17,6 +17,7 @@
     "expo-mail-composer": "~57.0.2",
     "expo-router": "~57.0.28",
     "expo-splash-screen": "~57.0.10",
+    "expo-sqlite": "~57.0.4",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -44,7 +45,7 @@
     "web": "expo start --web",
     "typecheck": "node scripts/generate-route-types.mjs && tsc --noEmit -p tsconfig.typecheck.json",
     "lint": "expo lint",
-    "test": "node --experimental-strip-types --test tests/care.test.mjs tests/registration.test.mjs tests/pets.test.mjs tests/support.test.mjs tests/profile.test.mjs",
+    "test": "node --experimental-strip-types --test tests/care.test.mjs tests/registration.test.mjs tests/pets.test.mjs tests/support.test.mjs tests/profile.test.mjs tests/persistence.test.mjs",
     "start:registration": "node scripts/start-registration.mjs"
   },
   "private": true

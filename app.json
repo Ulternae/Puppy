@@ -24,6 +24,7 @@
       "expo-font",
       "expo-router",
       "expo-mail-composer",
+      "expo-sqlite",
       [
         "expo-splash-screen",
         {

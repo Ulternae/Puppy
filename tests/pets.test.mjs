@@ -29,17 +29,21 @@ test('catalog photographs and favorite thumbnails stay within their size budgets
 
 test('a celebration starts on adding a bone and is cancelled when withdrawing that bone', () => {
   const start = initialPetsState();
-  const liked = petsStateReducer(start, { type: 'rate', id: 'milo' });
+  const pet = { ...start.pets[0], liked: true, rating: 13 };
+  const liked = petsStateReducer(start, { type: 'saved', pet, favorites: [{ ...pet, lastRatedOrder: 1 }] });
   assert.deepEqual(liked.celebration, { id: 1, petId: 'milo' });
-  const unliked = petsStateReducer(liked, { type: 'rate', id: 'milo' });
+  const unliked = petsStateReducer(liked, { type: 'saved', pet: start.pets[0], favorites: [] });
   assert.equal(unliked.celebration, null);
   assert.equal(unliked.pets[0].rating, 12);
-  assert.equal(petsStateReducer(start, { type: 'rate', id: 'missing' }), start);
+  assert.equal(petsStateReducer(start, { type: 'celebrationFinished', id: 99 }), start);
 });
 
 test('completion of an earlier animation cannot remove a newer celebration or its vote', () => {
-  const first = petsStateReducer(initialPetsState(), { type: 'rate', id: 'milo' });
-  const second = petsStateReducer(first, { type: 'rate', id: 'luna' });
+  const initial = initialPetsState();
+  const milo = { ...initial.pets[0], liked: true, rating: 13, lastRatedOrder: 1 };
+  const luna = { ...initial.pets[1], liked: true, rating: 9, lastRatedOrder: 2 };
+  const first = petsStateReducer(initial, { type: 'saved', pet: milo, favorites: [milo] });
+  const second = petsStateReducer(first, { type: 'saved', pet: luna, favorites: [luna, milo] });
   assert.equal(second.celebration.id, 2);
   assert.equal(petsStateReducer(second, { type: 'celebrationFinished', id: 1 }), second);
   const done = petsStateReducer(second, { type: 'celebrationFinished', id: 2 });
@@ -77,21 +81,32 @@ test('withdrawing a bone restores the original counter including a zero-vote pet
   assert.deepEqual(petsReducer(liked, { type: 'rate', id: 'bruno' }), original);
 });
 
-test('favorites keep exactly five distinct pets in their fixed order regardless of scores', () => {
-  let pets = initialPets();
-  for (let count = 0; count < 20; count++) pets = petsReducer(pets, { type: 'rate', id: 'bruno' });
+test('favorites start empty and select at most five pets by recency rather than score', () => {
+  assert.deepEqual(initialPetsState().favorites, []);
+  const pets = initialPets().slice(0, 6).map((pet, index) => ({ ...pet, liked: true, lastRatedOrder: index + 1 }));
   const favorites = favoritePets(pets);
-  assert.deepEqual(favorites.map(pet => pet.id), ['milo', 'luna', 'coco', 'nala', 'toby']);
+  assert.deepEqual(favorites.map(pet => pet.id), ['bruno', 'toby', 'nala', 'coco', 'luna']);
   assert.equal(favorites.length, 5);
   assert.equal(new Set(favorites.map(pet => pet.id)).size, 5);
 });
 
 test('the favorites screen reads the same updated ratings as the catalog', () => {
-  const rated = petsReducer(initialPets(), { type: 'rate', id: 'nala' });
-  const favorite = favoritePets(rated).find(pet => pet.id === 'nala');
+  const pet = { ...initialPets()[3], liked: true, rating: 16, lastRatedOrder: 1 };
+  const state = petsStateReducer(initialPetsState(), { type: 'saved', pet, favorites: [pet] });
+  const favorite = state.favorites.find(pet => pet.id === 'nala');
   assert.equal(favorite.rating, 16);
   assert.equal(favorite.liked, true);
-  assert.equal(favorite, rated.find(pet => pet.id === 'nala'));
+  assert.equal(state.pets.find(pet => pet.id === 'nala').rating, favorite.rating);
+});
+
+test('reopening restores all persisted pet fields without replaying confetti', () => {
+  const pet = { ...initialPets()[2], name: 'Coco', liked: true, rating: 7, lastRatedOrder: 3 };
+  const restored = petsStateReducer(initialPetsState(), { type: 'hydrate', favorites: [pet] });
+  assert.equal(restored.celebration, null);
+  assert.deepEqual(restored.favorites, [pet]);
+  assert.equal(restored.pets[2].rating, 7);
+  assert.equal(restored.pets[2].liked, true);
+  assert.equal(restored.pets[0].liked, false);
 });
 
 test('unknown identifiers do not affect ratings and a new session starts with original values', () => {

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { FlatList, StyleSheet, View, type ListRenderItem } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { PetCard } from '../../../components/pets';
+import { PetCard, PetsStorageFeedback } from '../../../components/pets';
 import { Copy, Footer, Title } from '../../../components/ui';
 import { usePets } from '../../../state/pets-context';
 import type { Pet } from '../../../lib/pets';
@@ -10,13 +10,13 @@ import { colors } from '../../../theme';
 const keyForPet = (pet: Pet) => pet.id;
 function Separator() { return <View style={{ height: 20 }} />; }
 function CatalogIntro() {
-  return <View style={{ gap: 12, marginBottom: 24 }}><Title>Pequeños grandes amigos.</Title><Copy style={{ color: colors.muted }}>Conoce a las mascotas y regala un huesito a tus favoritas.</Copy></View>;
+  return <View style={{ gap: 12, marginBottom: 24 }}><Title>Pequeños grandes amigos.</Title><Copy style={{ color: colors.muted }}>Conoce a las mascotas y regala un huesito a tus favoritas.</Copy><PetsStorageFeedback /></View>;
 }
 
 export default function PetsScreen() {
-  const { pets, ratePet } = usePets();
+  const { pets, ratePet, status, savingId } = usePets();
   const insets = useSafeAreaInsets();
-  const renderPet = useCallback<ListRenderItem<Pet>>(({ item }) => <PetCard pet={item} onRate={ratePet} />, [ratePet]);
+  const renderPet = useCallback<ListRenderItem<Pet>>(({ item }) => <PetCard pet={item} onRate={ratePet} disabled={status !== 'ready' || savingId !== null} saving={savingId === item.id} />, [ratePet, status, savingId]);
   return <FlatList data={pets} renderItem={renderPet} keyExtractor={keyForPet}
     style={styles.list} contentContainerStyle={[styles.content, { paddingBottom: 24 + insets.bottom }]}
     ListHeaderComponent={CatalogIntro} ItemSeparatorComponent={Separator}

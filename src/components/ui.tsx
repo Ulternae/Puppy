@@ -153,7 +153,7 @@ export function BrandHeader() {
     <View style={styles.brand}><Icon name="paw-outline" size={27} /><Copy weight="bold" style={styles.wordmark}>puppy</Copy></View>
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
       <View style={styles.avatar} accessibilityLabel="Perfil de Dani"><Copy weight="bold">D</Copy></View>
-      <IconButton icon="star-outline" iconColor={colors.primaryDark} accessibilityLabel="Ver cinco mascotas favoritas" onPress={() => router.navigate('/mascotas/favoritos')} style={{ margin: 0 }} />
+      <IconButton icon="star-outline" iconColor={colors.primaryDark} accessibilityLabel="Ver mascotas favoritas" onPress={() => router.navigate('/mascotas/favoritos')} style={{ margin: 0 }} />
       <AppMenu />
     </View>
   </View>;
