@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import type { Pet, PetPhoto } from '../lib/pets';
 import { colors } from '../theme';
-import { Action, Copy, Icon } from './ui';
+import { Action, AppMenu, Copy, Icon } from './ui';
 
 const photos: Record<PetPhoto, ImageSourcePropType> = {
   milo: require('../../assets/pets/milo.jpg'),
@@ -75,6 +75,7 @@ export function PetCatalogHeader({ favorites = false }: { favorites?: boolean })
       <IconButton icon="arrow-left" iconColor={colors.primaryDark} accessibilityLabel={favorites ? 'Volver a mascotas' : 'Volver al inicio'} onPress={() => { if (favorites) router.dismissTo('/mascotas'); else router.navigate('/inicio'); }} />
       {favorites ? <Copy weight="bold" style={styles.headerTitle}>Favoritos</Copy> : <View style={styles.brand}><Icon name="paw-outline" size={25} /><Copy weight="bold" style={styles.headerTitle}>puppy</Copy></View>}
       {!favorites && <IconButton icon="star-outline" iconColor={colors.primaryDark} accessibilityLabel="Ver cinco mascotas favoritas" onPress={() => router.navigate('/mascotas/favoritos')} />}
+      <AppMenu />
     </View>
   </SafeAreaView>;
 }

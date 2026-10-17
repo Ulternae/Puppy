@@ -38,9 +38,9 @@ npm run start:registration
 ## Funcionalidades
 
 - Panel diario con rutinas que se pueden marcar y desmarcar.
-- Perfil de mascota.
+- Perfil de Milo con fotografía circular y galería de seis fotos con contadores de huesitos. Al tocar una foto se abre un visor con imagen completa, deslizamiento y miniaturas inferiores.
 - Agenda con creación, validación, finalización y reapertura de recordatorios.
-- Navegación entre Mi día, Mascotas, Milo y Agenda.
+- Navegación entre Mi día, Mascotas, Milo y Agenda mediante pestañas y deslizamiento horizontal.
 - Registro de contactos con nombre completo, nacimiento, teléfono, email y descripción.
 - Selector de fecha de nacimiento y validación de campos.
 - Revisión, confirmación y edición de los datos del contacto.
@@ -48,5 +48,9 @@ npm run start:registration
 - Catálogo de diez mascotas con fotografías, accesible desde la pestaña Mascotas, Conocer mascotas o el menú Explorar mascotas.
 - Un huesito por mascota, con confeti al añadirlo y opción de retirarlo.
 - Cinco favoritos accesibles desde la estrella del catálogo, con sus contadores de huesitos actualizados.
+- Menús Contacto y Acerca de, disponibles en las cabeceras de Puppy.
+- Formulario de comentarios que prepara el correo para revisarlo y enviarlo desde el cliente del dispositivo, con opción de copiar el mensaje si no se puede abrir.
 
 Las rutinas, los recordatorios, el contacto y los votos se conservan durante la sesión de la aplicación. Favoritos contiene cinco mascotas fijas: Milo, Luna, Coco, Nala y Toby.
+
+El destinatario de comentarios se puede configurar mediante la variable de entorno `EXPO_PUBLIC_SUPPORT_EMAIL` antes de iniciar Expo.

@@ -72,6 +72,8 @@ export function Action({
   dark = false,
   accessibilityLabel,
   accessibilityState,
+  disabled = false,
+  loading = false,
 }: PropsWithChildren<{
   onPress: () => void;
   icon?: IconName;
@@ -79,11 +81,15 @@ export function Action({
   dark?: boolean;
   accessibilityLabel?: string;
   accessibilityState?: AccessibilityState;
+  disabled?: boolean;
+  loading?: boolean;
 }>) {
   return (
     <Button
       mode={secondary ? "outlined" : "contained"}
       onPress={onPress}
+      disabled={disabled}
+      loading={loading}
       accessibilityLabel={accessibilityLabel}
       accessibilityState={accessibilityState}
       icon={
@@ -103,7 +109,7 @@ export function Action({
     </Button>
   );
 }
-export function BrandHeader() {
+export function AppMenu() {
   const { savedContact, viewContact } = useRegistration();
   const [visible, setVisible] = useState(false);
   const links = [
@@ -112,23 +118,10 @@ export function BrandHeader() {
     ["Agenda", "/agenda"],
     ["Explorar mascotas", "/mascotas"],
     [savedContact ? "Ver contacto" : "Registrar contacto", savedContact ? "/registro/confirmar" : "/registro"],
+    ["Contacto", "/contacto"],
+    ["Acerca de", "/acerca"],
   ] as const;
-  return (
-    <View style={styles.header}>
-      <View style={styles.brand}>
-        <Icon name="paw-outline" size={27} />
-        <Copy weight="bold" style={styles.wordmark}>
-          puppy
-        </Copy>
-      </View>
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-        <View
-          style={styles.avatar}
-          accessibilityLabel="Perfil de Dani"
-        >
-          <Copy weight="bold">D</Copy>
-        </View>
-        <Menu
+  return <Menu
           visible={visible}
           onDismiss={() => setVisible(false)}
           anchor={
@@ -153,10 +146,17 @@ export function BrandHeader() {
               }}
             />
           ))}
-        </Menu>
-      </View>
+        </Menu>;
+}
+export function BrandHeader() {
+  return <View style={styles.header}>
+    <View style={styles.brand}><Icon name="paw-outline" size={27} /><Copy weight="bold" style={styles.wordmark}>puppy</Copy></View>
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+      <View style={styles.avatar} accessibilityLabel="Perfil de Dani"><Copy weight="bold">D</Copy></View>
+      <IconButton icon="star-outline" iconColor={colors.primaryDark} accessibilityLabel="Ver cinco mascotas favoritas" onPress={() => router.navigate('/mascotas/favoritos')} style={{ margin: 0 }} />
+      <AppMenu />
     </View>
-  );
+  </View>;
 }
 export function Mascot({ large = false }: { large?: boolean }) {
   return (

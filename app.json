@@ -23,6 +23,7 @@
       "@react-native-community/datetimepicker",
       "expo-font",
       "expo-router",
+      "expo-mail-composer",
       [
         "expo-splash-screen",
         {
