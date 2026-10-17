@@ -40,10 +40,13 @@ npm run start:registration
 - Panel diario con rutinas que se pueden marcar y desmarcar.
 - Perfil de mascota.
 - Agenda con creación, validación, finalización y reapertura de recordatorios.
-- Navegación entre Mi día, Mascota y Agenda.
+- Navegación entre Mi día, Mascotas, Milo y Agenda.
 - Registro de contactos con nombre completo, nacimiento, teléfono, email y descripción.
 - Selector de fecha de nacimiento y validación de campos.
 - Revisión, confirmación y edición de los datos del contacto.
 - Acceso al contacto confirmado desde el menú Ver contacto.
+- Catálogo de diez mascotas con fotografías, accesible desde la pestaña Mascotas, Conocer mascotas o el menú Explorar mascotas.
+- Un huesito por mascota, con confeti al añadirlo y opción de retirarlo.
+- Cinco favoritos accesibles desde la estrella del catálogo, con sus contadores de huesitos actualizados.
 
-Las rutinas, los recordatorios y el contacto se conservan durante la sesión de la aplicación.
+Las rutinas, los recordatorios, el contacto y los votos se conservan durante la sesión de la aplicación. Favoritos contiene cinco mascotas fijas: Milo, Luna, Coco, Nala y Toby.

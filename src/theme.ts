@@ -6,6 +6,7 @@ export const colors = {
   action: '#3C2F33', accentSoft: '#F7E8DE', ink: '#3C2F33', muted: '#705E55',
   canvas: '#FFFFFF', surface: '#FFFDFA', outline: '#967E71',
   divider: '#E9DBCF', error: '#AF302B', errorSoft: '#FFE8E2',
+  rating: '#A76506',
 } as const;
 
 export const fonts = {

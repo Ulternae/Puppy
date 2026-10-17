@@ -16,6 +16,7 @@ export default function HomeScreen() {
       <Copy style={styles.heroDescription}>Sus rutinas, sus citas y todo tu cariño.{"\n"}Dale a Milo un día tan especial como él.</Copy>
       <View style={styles.heroBottom}><View style={{ paddingBottom: 8 }}><Action dark icon="arrow-top-right" onPress={() => router.navigate('/mascota')}>Conoce a Milo</Action></View><Mascot /></View>
     </View>
+    <Action secondary icon="paw-outline" onPress={() => router.navigate('/mascotas')}>Conocer mascotas</Action>
     <RoutineList />
     <View style={{ gap: 16 }}><View style={styles.section}><Copy accessibilityRole="header" weight="bold" style={{ fontSize: 22 }}>En su agenda</Copy><NavText onPress={() => router.navigate('/agenda')}>Ver todo</NavText></View>
       {next ? <ReminderCard reminder={next} /> : <View style={styles.empty}><Copy weight="medium">Todo al día, más tiempo juntos.</Copy><Copy style={styles.subtitle}>Añade su próximo plan cuando quieras.</Copy></View>}

@@ -19,6 +19,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
+    "react-native-confetti-cannon": "^1.5.2",
     "react-native-paper": "^5.15.3",
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",
@@ -39,7 +40,7 @@
     "web": "expo start --web",
     "typecheck": "node scripts/generate-route-types.mjs && tsc --noEmit -p tsconfig.typecheck.json",
     "lint": "expo lint",
-    "test": "node --experimental-strip-types --test tests/care.test.mjs tests/registration.test.mjs",
+    "test": "node --experimental-strip-types --test tests/care.test.mjs tests/registration.test.mjs tests/pets.test.mjs",
     "start:registration": "node scripts/start-registration.mjs"
   },
   "private": true

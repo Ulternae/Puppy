@@ -7,6 +7,7 @@ import {
   Text,
   View,
   type TextProps,
+  type AccessibilityState,
 } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
@@ -69,16 +70,22 @@ export function Action({
   icon,
   secondary = false,
   dark = false,
+  accessibilityLabel,
+  accessibilityState,
 }: PropsWithChildren<{
   onPress: () => void;
   icon?: IconName;
   secondary?: boolean;
   dark?: boolean;
+  accessibilityLabel?: string;
+  accessibilityState?: AccessibilityState;
 }>) {
   return (
     <Button
       mode={secondary ? "outlined" : "contained"}
       onPress={onPress}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={accessibilityState}
       icon={
         icon
           ? ({ size, color }) => <Icon name={icon} size={size} color={color} />
@@ -103,6 +110,7 @@ export function BrandHeader() {
     ["Mi día", "/inicio"],
     ["Mi mascota", "/mascota"],
     ["Agenda", "/agenda"],
+    ["Explorar mascotas", "/mascotas"],
     [savedContact ? "Ver contacto" : "Registrar contacto", savedContact ? "/registro/confirmar" : "/registro"],
   ] as const;
   return (

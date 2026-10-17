@@ -11,6 +11,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { colors, theme } from '../theme';
 import { Icon, type IconName } from '../components/ui';
 import { RegistrationProvider } from '../state/registration-context';
+import { PetsProvider } from '../state/pets-context';
 
 void SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
@@ -18,11 +19,11 @@ export default function RootLayout() {
   useEffect(() => { if (loaded || error) void SplashScreen.hideAsync(); }, [loaded, error]);
   if (!loaded && !error) return null;
   return <SafeAreaProvider><PaperProvider theme={theme} settings={{ icon: props => <Icon name={props.name as IconName} size={props.size} color={props.color} /> }}>
-    <RegistrationProvider><StatusBar style="dark" />
+    <RegistrationProvider><PetsProvider><StatusBar style="dark" />
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.canvas } }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="(puppy)" />
       <Stack.Screen name="registro" />
-    </Stack></RegistrationProvider>
+    </Stack></PetsProvider></RegistrationProvider>
   </PaperProvider></SafeAreaProvider>;
 }
