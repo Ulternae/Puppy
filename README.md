@@ -8,21 +8,50 @@ Aplicación de cuidado de mascotas desarrollada con React Native, Expo SDK 57 y 
 
 Pantalla principal con la identidad de Puppy, rutinas diarias, perfil de Milo y agenda de recordatorios.
 
+
+https://github.com/user-attachments/assets/885743a0-34aa-4ad8-95c8-a1478b69a19c
+
+
+
 ### Fase 2 · Registro de contactos
 
 Formulario con validación de datos y selector de fecha de nacimiento. Permite revisar, editar y confirmar el contacto, y consultarlo desde el menú.
+
+
+
+https://github.com/user-attachments/assets/3de47b17-7ff8-40f5-9bea-2d819f852f05
+
+
 
 ### Fase 3 · Mascotas y huesitos
 
 Catálogo de diez mascotas con fotografías, un huesito por mascota, opción de retirarlo, confeti al añadirlo y acceso a favoritos desde la estrella.
 
+
+
+https://github.com/user-attachments/assets/d93b729d-c07b-4e3a-a20f-0c72ef8a36c4
+
+
+
 ### Fase 4 · Navegación, contacto y galería
 
 Navegación por pestañas y deslizamiento, menús Contacto y Acerca de, formulario de comentarios mediante el correo del dispositivo y galería de Milo con visor y miniaturas.
 
+
+
+https://github.com/user-attachments/assets/46947d1f-8595-4ee9-a019-097e8e79f1e6
+
+
+
 ### Fase 5 · Favoritos persistentes
 
 Guardado local con SQLite de los cinco favoritos más recientes. Conserva sus datos y votos al cerrar y abrir la aplicación; al añadir un sexto favorito, reemplaza al más antiguo.
+
+
+
+https://github.com/user-attachments/assets/f8d307fa-7ee9-4592-a6e2-91a51f310962
+
+
 
 ## Requisitos
 
