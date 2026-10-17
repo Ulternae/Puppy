@@ -1,9 +1,9 @@
 import { View } from 'react-native';
-import { Action, Copy, Footer, Screen, Title } from '../components/ui';
-import { ReminderCard } from '../components/care';
-import { useCare } from '../state/care-context';
-import { sortedReminders } from '../lib/care';
-import { colors } from '../theme';
+import { Action, Copy, Footer, Screen, Title } from '../../components/ui';
+import { ReminderCard } from '../../components/care';
+import { useCare } from '../../state/care-context';
+import { sortedReminders } from '../../lib/care';
+import { colors } from '../../theme';
 
 export default function AgendaScreen() {
   const { state, openEditor } = useCare();
@@ -13,7 +13,6 @@ export default function AgendaScreen() {
     <Action icon="plus" onPress={openEditor}>Nuevo recordatorio</Action>
     <Copy weight="medium" style={{ color: colors.primaryText }}>{pending === 1 ? '1 plan pendiente' : `${pending} planes pendientes`}</Copy>
     {sortedReminders(state.reminders).map(reminder => <ReminderCard key={reminder.id} reminder={reminder} editable />)}
-    <View style={{ padding: 18, backgroundColor: colors.primarySubtle, borderRadius: 12 }}><Copy style={{ fontSize: 13, color: colors.muted }}>Estos planes se guardan durante la sesión. Puedes completarlos y volver a abrirlos.</Copy></View>
     <Footer />
   </Screen>;
 }

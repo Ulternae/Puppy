@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
-import { Action, Copy, Footer, Mascot, Screen, Title } from '../components/ui';
-import { colors } from '../theme';
+import { Action, Copy, Footer, Mascot, Screen, Title } from '../../components/ui';
+import { colors } from '../../theme';
 
 export default function PetScreen() {
   return <Screen>

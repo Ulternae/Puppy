@@ -37,9 +37,10 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "node scripts/generate-route-types.mjs && tsc --noEmit -p tsconfig.typecheck.json",
     "lint": "expo lint",
-    "test": "node --experimental-strip-types --test tests/care.test.mjs"
+    "test": "node --experimental-strip-types --test tests/care.test.mjs tests/registration.test.mjs",
+    "start:registration": "node scripts/start-registration.mjs"
   },
   "private": true
 }

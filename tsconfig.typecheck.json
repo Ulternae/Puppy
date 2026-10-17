@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "index.ts",
+    "app.config.ts",
+    "expo-env.d.ts",
+    ".expo/typecheck/router.d.ts"
+  ],
+  "exclude": ["node_modules", "dist", ".expo/types"]
+}
