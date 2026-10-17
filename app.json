@@ -4,26 +4,37 @@
     "slug": "PuppyMobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/brand/puppy-icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#3C2F33",
+        "foregroundImage": "./assets/brand/puppy-foreground.png"
       },
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/brand/puppy-icon.png"
     },
     "plugins": [
       "@react-native-community/datetimepicker",
-      "expo-font"
-    ]
+      "expo-font",
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#3C2F33",
+          "image": "./assets/brand/puppy-foreground.png",
+          "imageWidth": 200
+        }
+      ]
+    ],
+    "scheme": "puppymobile",
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }
