@@ -2,6 +2,28 @@
 
 Aplicación de cuidado de mascotas desarrollada con React Native, Expo SDK 57 y TypeScript. Utiliza Expo Router para la navegación y React Native Paper para los componentes de interfaz.
 
+## Fases implementadas
+
+### Fase 1 · Inicio e identidad visual
+
+Pantalla principal con la identidad de Puppy, rutinas diarias, perfil de Milo y agenda de recordatorios.
+
+### Fase 2 · Registro de contactos
+
+Formulario con validación de datos y selector de fecha de nacimiento. Permite revisar, editar y confirmar el contacto, y consultarlo desde el menú.
+
+### Fase 3 · Mascotas y huesitos
+
+Catálogo de diez mascotas con fotografías, un huesito por mascota, opción de retirarlo, confeti al añadirlo y acceso a favoritos desde la estrella.
+
+### Fase 4 · Navegación, contacto y galería
+
+Navegación por pestañas y deslizamiento, menús Contacto y Acerca de, formulario de comentarios mediante el correo del dispositivo y galería de Milo con visor y miniaturas.
+
+### Fase 5 · Favoritos persistentes
+
+Guardado local con SQLite de los cinco favoritos más recientes. Conserva sus datos y votos al cerrar y abrir la aplicación; al añadir un sexto favorito, reemplaza al más antiguo.
+
 ## Requisitos
 
 - Node.js 22.13 o superior y npm.
